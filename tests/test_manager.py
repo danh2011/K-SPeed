@@ -7,6 +7,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -45,6 +46,16 @@ class ManagerTests(unittest.TestCase):
         self.assertTrue(m.is_ksp(self.ksp))
         self.assertFalse(m.is_ksp(self.tmp))
         self.assertEqual(m.normalize_ksp(self.ksp / "GameData"), self.ksp)
+
+    def test_find_ksp_includes_applications_path_on_mac_and_linux(self):
+        expected = Path("/Applications/KSP/Kerbal Space Program")
+        with mock.patch.object(m, "steam_roots", return_value=[]), \
+                mock.patch.object(m, "is_ksp", side_effect=lambda path: path == expected):
+            for is_mac in (False, True):
+                with self.subTest(is_mac=is_mac), \
+                        mock.patch.object(m, "IS_MAC", is_mac), \
+                        mock.patch.object(m, "IS_WIN", False):
+                    self.assertEqual(m.find_ksp_installs(), [expected])
 
     def test_deploy_copies_sounds_dll_and_never_touches_plugindata(self):
         pd = self.ksp / "GameData" / m.MOD_FOLDER / "PluginData"

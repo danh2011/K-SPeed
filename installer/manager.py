@@ -357,9 +357,11 @@ def find_ksp_installs() -> list:
         extras = ["C:/GOG Games/Kerbal Space Program", "C:/Program Files (x86)/GOG Galaxy/Games/Kerbal Space Program",
                   "C:/Kerbal Space Program"]
     elif IS_MAC:
-        extras = ["/Applications/Kerbal Space Program", str(Path.home() / "Applications" / "Kerbal Space Program")]
+        extras = ["/Applications/KSP/Kerbal Space Program", "/Applications/Kerbal Space Program",
+                  str(Path.home() / "Applications" / "Kerbal Space Program")]
     else:
-        extras = [str(Path.home() / "GOG Games" / "Kerbal Space Program" / "game"),
+        extras = ["/Applications/KSP/Kerbal Space Program",
+                  str(Path.home() / "GOG Games" / "Kerbal Space Program" / "game"),
                   str(Path.home() / "KSP"), str(Path.home() / "Games" / "Kerbal Space Program")]
     for e in extras:
         add(e)
