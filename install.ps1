@@ -1,13 +1,13 @@
 # K-SPeed - bootstrap installer for Windows (PowerShell 5.1+ or 7+).
 #
-#   irm https://raw.githubusercontent.com/OWNER/REPO/main/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/danh2011/k-speed/main/install.ps1 | iex
 #
 # Fetches the repo into %LOCALAPPDATA%\K-SPeed\repo, then launches the interactive manager.
 # Optional env vars: KSPEED_REPO, KSPEED_REF, KSPEED_YES=1
 $ErrorActionPreference = 'Stop'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Repo = if ($env:KSPEED_REPO) { $env:KSPEED_REPO } else { 'OWNER/REPO' }
+$Repo = if ($env:KSPEED_REPO) { $env:KSPEED_REPO } else { 'danh2011/k-speed' }
 $Ref = if ($env:KSPEED_REF) { $env:KSPEED_REF } else { 'main' }
 $AppHome = if ($env:KSPEED_HOME) { $env:KSPEED_HOME } else { Join-Path $env:LOCALAPPDATA 'K-SPeed' }
 $GitUrl = if ($env:KSPEED_GIT_URL) { $env:KSPEED_GIT_URL } else { "https://github.com/$Repo.git" }
@@ -17,7 +17,7 @@ function Say($m) { Write-Host "==> $m" }
 function Fail($m) { Write-Host "!!  $m" -ForegroundColor Red; throw $m }
 
 if ($Repo -eq ('OWNER' + '/REPO') -and -not $env:KSPEED_GIT_URL) {
-    Fail 'This script still has the OWNER/REPO placeholder. Run tools/set_repo.py YOUR_USER/YOUR_REPO first.'
+    Fail 'This script still has the danh2011/k-speed placeholder. Run tools/set_repo.py YOUR_USER/YOUR_REPO first.'
 }
 
 # ---- Python 3.8+ (py launcher, python, python3) ---------------------------------

@@ -13,13 +13,13 @@ knows the runway length, and tells you to **ABORT** when you can't get airborne 
 **macOS / Linux**
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/danh2011/k-speed/main/install.sh)"
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
-irm https://raw.githubusercontent.com/OWNER/REPO/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/danh2011/k-speed/main/install.ps1 | iex
 ```
 
 That downloads the repo, then opens a small keyboard-driven installer (arrow keys + Enter) that:
@@ -73,7 +73,7 @@ Override with `KSPEED_HOME` / `KSPEED_BIN`.
 ## Publishing this repo (for the maintainer)
 
 ```sh
-python tools/set_repo.py YOUR_USER/YOUR_REPO   # swaps the OWNER/REPO placeholder in the scripts and this README
+python tools/set_repo.py YOUR_USER/YOUR_REPO   # swaps the danh2011/k-speed placeholder in the scripts and this README
 git init -b main && git add -A && git commit -m "Initial commit"
 git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git && git push -u origin main
 ```

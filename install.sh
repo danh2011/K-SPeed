@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # K-SPeed - bootstrap installer for macOS and Linux.
 #
-#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/install.sh)"
+#   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/danh2011/k-speed/main/install.sh)"
 #
 # Fetches the repo into ~/.kspeed/repo, then launches the interactive manager.
 # Extra flags are passed through, e.g.:  ... install.sh --yes --ksp "/path/to/KSP"
 set -euo pipefail
 
-REPO="${KSPEED_REPO:-OWNER/REPO}"
+REPO="${KSPEED_REPO:-danh2011/k-speed}"
 REF="${KSPEED_REF:-main}"
 APP_HOME="${KSPEED_HOME:-$HOME/.kspeed}"
 GIT_URL="${KSPEED_GIT_URL:-https://github.com/$REPO.git}"
@@ -18,7 +18,7 @@ warn() { printf "!!  %s\n" "$*" >&2; }
 die()  { warn "$*"; exit 1; }
 
 if [ "$REPO" = "OWNER""/REPO" ] && [ -z "${KSPEED_GIT_URL:-}" ]; then
-  die "This script still has the OWNER/REPO placeholder. Run tools/set_repo.py YOUR_USER/YOUR_REPO first."
+  die "This script still has the danh2011/k-speed placeholder. Run tools/set_repo.py YOUR_USER/YOUR_REPO first."
 fi
 
 # ---- Python 3.8+ ------------------------------------------------------------
