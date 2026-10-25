@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
-namespace SpaceplaneTakeoffAssistant
+namespace kspeed
 {
     public static class PluginPaths
     {
-        public static string Root { get { return KSPUtil.ApplicationRootPath + "GameData/SpaceplaneTakeoffAssistant/"; } }
+        public static string Root { get { return KSPUtil.ApplicationRootPath + "GameData/kspeed/"; } }
         public static string Data { get { return Root + "PluginData/"; } }
-        public const string SoundUrl = "SpaceplaneTakeoffAssistant/Sounds/";
+        public const string SoundUrl = "kspeed/Sounds/";
     }
 
     /// <summary>Culture-safe ConfigNode helpers (a German/UK locale must not break "4.0").</summary>
@@ -93,7 +93,7 @@ namespace SpaceplaneTakeoffAssistant
             }
             catch (Exception e)
             {
-                Debug.LogWarning("[TakeoffAssistant] Could not read settings: " + e.Message);
+                Debug.LogWarning("[kspeed] Could not read settings: " + e.Message);
             }
             return s;
         }
@@ -118,11 +118,11 @@ namespace SpaceplaneTakeoffAssistant
                 n.AddValue("voice", Voice.ToString());
                 n.AddValue("volume", Cfg.S(Volume));
                 n.AddValue("toggleKey", ToggleKey.ToString());
-                root.Save(FilePath, "Spaceplane Takeoff Assistant settings");
+                root.Save(FilePath, "K-SPeed settings");
             }
             catch (Exception e)
             {
-                Debug.LogWarning("[TakeoffAssistant] Could not save settings: " + e.Message);
+                Debug.LogWarning("[kspeed] Could not save settings: " + e.Message);
             }
         }
     }
@@ -158,7 +158,7 @@ namespace SpaceplaneTakeoffAssistant
             }
             catch (Exception e)
             {
-                Debug.LogWarning("[TakeoffAssistant] Could not read calibration: " + e.Message);
+                Debug.LogWarning("[kspeed] Could not read calibration: " + e.Message);
             }
             return c;
         }
@@ -180,7 +180,7 @@ namespace SpaceplaneTakeoffAssistant
             }
             catch (Exception e)
             {
-                Debug.LogWarning("[TakeoffAssistant] Could not save calibration: " + e.Message);
+                Debug.LogWarning("[kspeed] Could not save calibration: " + e.Message);
             }
         }
 

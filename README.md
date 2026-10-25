@@ -1,4 +1,4 @@
-# Spaceplane Takeoff Assistant
+# K-SPeed
 
 A Kerbal Space Program (1.12.x) plugin that calls out **V1 / VR / V2** for your spaceplane,
 knows the runway length, and tells you to **ABORT** when you can't get airborne in time.
@@ -26,8 +26,8 @@ That downloads the repo, then opens a small keyboard-driven installer (arrow key
 
 1. checks for the .NET SDK and offers to install it (winget / brew / apt / dnf / pacman),
 2. finds your KSP install (Steam libraries, GOG, common folders) or lets you type a path,
-3. compiles the plugin against *your* KSP and copies it into `GameData/SpaceplaneTakeoffAssistant`,
-4. installs a `takeoff-assistant` command.
+3. compiles the plugin against *your* KSP and copies it into `GameData/kspeed`,
+4. installs a `kspeed` command.
 
 Requirements: **Python 3.8+** (only to run the installer) and the **.NET SDK 6+** (to compile).
 The plugin has to be compiled locally because it links against KSP's own DLLs, which can't be redistributed.
@@ -38,19 +38,19 @@ Non-interactive: add `--yes --ksp "/path/to/Kerbal Space Program"`, e.g.
 ## Commands
 
 ```text
-takeoff-assistant              interactive menu
-takeoff-assistant install      build + install (also re-installs)
-takeoff-assistant update       pull latest from GitHub, rebuild, reinstall
-takeoff-assistant status       what's installed, and is an update available?
-takeoff-assistant uninstall    remove the mod, keep settings/calibration/runways
-takeoff-assistant uninstall --purge       ...and delete settings/calibration/runways
-takeoff-assistant uninstall --everything  ...and remove this tool too
+kspeed              interactive menu
+kspeed install      build + install (also re-installs)
+kspeed update       pull latest from GitHub, rebuild, reinstall
+kspeed status       what's installed, and is an update available?
+kspeed uninstall    remove the mod, keep settings/calibration/runways
+kspeed uninstall --purge       ...and delete settings/calibration/runways
+kspeed uninstall --everything  ...and remove this tool too
 ```
 
 Useful flags (put them *after* the command): `--ksp PATH`, `--yes`, `--verbose`, `--force`, `--ref BRANCH`.
 
 Your settings, per-craft calibration and custom runways live in
-`GameData/SpaceplaneTakeoffAssistant/PluginData/` and are never overwritten by an update.
+`GameData/kspeed/PluginData/` and are never overwritten by an update.
 
 ## In the game
 
@@ -63,12 +63,12 @@ Your settings, per-craft calibration and custom runways live in
 
 | What | Where |
 | --- | --- |
-| Installer checkout + state | `~/.takeoff-assistant` (Windows: `%LOCALAPPDATA%\TakeoffAssistant`) |
-| `takeoff-assistant` command | `~/.local/bin` (Windows: `...\TakeoffAssistant\bin`, added to your user PATH) |
-| Plugin + sounds | `<KSP>/GameData/SpaceplaneTakeoffAssistant` |
-| Build log (if a build fails) | `~/.takeoff-assistant/build.log` |
+| Installer checkout + state | `~/.kspeed` (Windows: `%LOCALAPPDATA%\K-SPeed`) |
+| `kspeed` command | `~/.local/bin` (Windows: `...\K-SPeed\bin`, added to your user PATH) |
+| Plugin + sounds | `<KSP>/GameData/kspeed` |
+| Build log (if a build fails) | `~/.kspeed/build.log` |
 
-Override with `TAKEOFF_ASSISTANT_HOME` / `TAKEOFF_ASSISTANT_BIN`.
+Override with `KSPEED_HOME` / `KSPEED_BIN`.
 
 ## Publishing this repo (for the maintainer)
 
@@ -78,8 +78,8 @@ git init -b main && git add -A && git commit -m "Initial commit"
 git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git && git push -u origin main
 ```
 
-Every `takeoff-assistant update` tracks the `main` branch, so pushing to `main` ships to everyone.
-Forks/mirrors: set `TAKEOFF_ASSISTANT_REPO=you/fork` and/or `TAKEOFF_ASSISTANT_REF=branch`.
+Every `kspeed update` tracks the `main` branch, so pushing to `main` ships to everyone.
+Forks/mirrors: set `KSPEED_REPO=you/fork` and/or `KSPEED_REF=branch`.
 
 ## Repo layout
 

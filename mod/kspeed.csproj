@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyName>SpaceplaneTakeoffAssistant</AssemblyName>
-    <RootNamespace>SpaceplaneTakeoffAssistant</RootNamespace>
+    <AssemblyName>kspeed</AssemblyName>
+    <RootNamespace>kspeed</RootNamespace>
     <LangVersion>7.3</LangVersion>
     <Version>0.1.0</Version>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <!--
-    KSPRoot is normally passed by the installer (takeoff-assistant install / update).
+    KSPRoot is normally passed by the installer (kspeed install / update).
     For manual builds:  dotnet build -c Release -p:KSPRoot="/path/to/Kerbal Space Program"
     The Managed folder differs per OS and is auto-detected.
   -->
@@ -51,12 +51,12 @@
        The installer passes -p:SkipDeploy=true and does its own tracked copy instead. -->
   <Target Name="DeployToKSP" AfterTargets="Build" Condition="'$(KSPManaged)' != '' And '$(SkipDeploy)' != 'true'">
     <ItemGroup>
-      <GameDataFiles Include="$(MSBuildProjectDirectory)/GameData/SpaceplaneTakeoffAssistant/Sounds/*.wav" />
+      <GameDataFiles Include="$(MSBuildProjectDirectory)/GameData/kspeed/Sounds/*.wav" />
     </ItemGroup>
-    <MakeDir Directories="$(KSPRoot)/GameData/SpaceplaneTakeoffAssistant/Plugins;$(KSPRoot)/GameData/SpaceplaneTakeoffAssistant/Sounds;$(KSPRoot)/GameData/SpaceplaneTakeoffAssistant/PluginData" />
-    <Copy SourceFiles="$(OutputPath)SpaceplaneTakeoffAssistant.dll" DestinationFolder="$(KSPRoot)/GameData/SpaceplaneTakeoffAssistant/Plugins" />
-    <Copy SourceFiles="@(GameDataFiles)" DestinationFolder="$(KSPRoot)/GameData/SpaceplaneTakeoffAssistant/Sounds" />
-    <Message Importance="high" Text="Deployed to $(KSPRoot)/GameData/SpaceplaneTakeoffAssistant" />
+    <MakeDir Directories="$(KSPRoot)/GameData/kspeed/Plugins;$(KSPRoot)/GameData/kspeed/Sounds;$(KSPRoot)/GameData/kspeed/PluginData" />
+    <Copy SourceFiles="$(OutputPath)kspeed.dll" DestinationFolder="$(KSPRoot)/GameData/kspeed/Plugins" />
+    <Copy SourceFiles="@(GameDataFiles)" DestinationFolder="$(KSPRoot)/GameData/kspeed/Sounds" />
+    <Message Importance="high" Text="Deployed to $(KSPRoot)/GameData/kspeed" />
   </Target>
 
 </Project>

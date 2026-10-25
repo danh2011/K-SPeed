@@ -29,7 +29,7 @@ def make_fake_ksp(base: Path) -> Path:
 
 class ManagerTests(unittest.TestCase):
     def setUp(self):
-        self.tmp = Path(tempfile.mkdtemp(prefix="ta-test-"))
+        self.tmp = Path(tempfile.mkdtemp(prefix="kspeed-test-"))
         self.ksp = make_fake_ksp(self.tmp)
         # Redirect all manager state into the temp dir.
         m.HOME = self.tmp / "home"
@@ -88,13 +88,13 @@ class ManagerTests(unittest.TestCase):
     def test_install_with_skip_build_records_state(self):
         if os.name == "nt":
             self.skipTest("launcher install edits the real user PATH on Windows")
-        os.environ["TAKEOFF_ASSISTANT_BIN"] = str(self.tmp / "bin")
+        os.environ["KSPEED_BIN"] = str(self.tmp / "bin")
         args = m.build_parser().parse_args(
-            ["install", "--yes", "--skip-build", "--ksp", str(self.ksp), "--repo", "me/ksp-takeoff-assistant"])
+            ["install", "--yes", "--skip-build", "--ksp", str(self.ksp), "--repo", "me/kspeed"])
         self.assertEqual(m.cmd_install(args), 0)
         st = m.load_state()
         self.assertEqual(st["ksp"], str(self.ksp))
-        self.assertEqual(st["repo"], "me/ksp-takeoff-assistant")
+        self.assertEqual(st["repo"], "me/kspeed")
         self.assertTrue(st["manifest"])
         self.assertTrue((self.tmp / "bin" / m.CMD_NAME).exists())
 

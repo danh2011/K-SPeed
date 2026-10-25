@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Spaceplane Takeoff Assistant manager.
+K-SPeed manager.
 
-  takeoff-assistant                 interactive menu (TUI)
-  takeoff-assistant install         build the mod against your KSP and install it
-  takeoff-assistant update          pull the latest from GitHub, rebuild, reinstall
-  takeoff-assistant uninstall       remove the mod (add --purge to delete settings,
+    kspeed                 interactive menu (TUI)
+    kspeed install         build the mod against your KSP and install it
+    kspeed update          pull the latest from GitHub, rebuild, reinstall
+    kspeed uninstall       remove the mod (add --purge to delete settings,
                                     --everything to also remove this tool)
-  takeoff-assistant status          show what is installed and whether an update exists
+    kspeed status          show what is installed and whether an update exists
 
 Only needs Python 3.8+ (standard library) and the .NET SDK (to compile the plugin).
 Works on Windows, macOS and Linux.
@@ -32,13 +32,13 @@ from pathlib import Path
 __version__ = "1.0.0"
 
 # Replace with your "owner/repo" (tools/set_repo.py does this for you).
-DEFAULT_REPO = "OWNER/REPO"
+DEFAULT_REPO = "danh2011/k-speed"
 PLACEHOLDER_REPO = "OWNER" + "/REPO"  # split so tools/set_repo.py leaves it alone
 DEFAULT_REF = "main"
 
-MOD_FOLDER = "SpaceplaneTakeoffAssistant"
-DLL_NAME = "SpaceplaneTakeoffAssistant.dll"
-CMD_NAME = "takeoff-assistant"
+MOD_FOLDER = "kspeed"
+DLL_NAME = "kspeed.dll"
+CMD_NAME = "kspeed"
 
 IS_WIN = os.name == "nt"
 IS_MAC = sys.platform == "darwin"
@@ -47,13 +47,13 @@ SOURCE_DIR = Path(__file__).resolve().parent.parent  # the repo checkout this fi
 
 
 def _app_home() -> Path:
-    env = os.environ.get("TAKEOFF_ASSISTANT_HOME")
+    env = os.environ.get("KSPEED_HOME")
     if env:
         return Path(env)
     if IS_WIN:
         base = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
-        return Path(base) / "TakeoffAssistant"
-    return Path.home() / ".takeoff-assistant"
+        return Path(base) / "K-SPeed"
+    return Path.home() / ".kspeed"
 
 
 HOME = _app_home()
@@ -248,7 +248,7 @@ def pause() -> None:
 
 def banner() -> None:
     say()
-    say(bold("  Spaceplane Takeoff Assistant") + dim("  manager v" + __version__))
+    say(bold("  K-SPeed") + dim("  manager v" + __version__))
     say(dim("  V1/VR/V2 callouts and runway abort advice for Kerbal Space Program"))
     say()
 
@@ -512,7 +512,7 @@ def run_logged(cmd, log_path: Path, cwd=None) -> int:
 
 
 def build_plugin(dotnet: str, ksp: Path) -> Path:
-    csproj = SOURCE_DIR / "mod" / "SpaceplaneTakeoffAssistant.csproj"
+    csproj = SOURCE_DIR / "mod" / "kspeed.csproj"
     if not csproj.exists():
         die("Cannot find %s" % csproj)
     if BUILD_DIR.exists():
@@ -618,7 +618,7 @@ def deploy(ksp: Path, dll: Path, old_manifest) -> list:
 def bin_dir() -> Path:
     if IS_WIN:
         return HOME / "bin"
-    return Path(os.environ.get("TAKEOFF_ASSISTANT_BIN") or (Path.home() / ".local" / "bin"))
+    return Path(os.environ.get("KSPEED_BIN") or (Path.home() / ".local" / "bin"))
 
 
 def launcher_path() -> Path:
@@ -679,7 +679,7 @@ def is_git_checkout() -> bool:
 
 
 def resolve_repo(state: dict, explicit=None) -> str:
-    slug = explicit or state.get("repo") or os.environ.get("TAKEOFF_ASSISTANT_REPO")
+    slug = explicit or state.get("repo") or os.environ.get("KSPEED_REPO")
     if not slug and is_git_checkout():
         r = git("config", "--get", "remote.origin.url")
         m = re.search(r"github\.com[:/](.+?)(?:\.git)?\s*$", r.stdout.strip())
@@ -701,7 +701,7 @@ def remote_sha(slug: str, ref: str) -> str:
         return ""
     if have_git():
         try:
-            url = os.environ.get("TAKEOFF_ASSISTANT_GIT_URL") or "https://github.com/%s.git" % slug
+            url = os.environ.get("KSPEED_GIT_URL") or "https://github.com/%s.git" % slug
             r = subprocess.run(["git", "ls-remote", url, "refs/heads/%s" % ref],
                                capture_output=True, text=True, timeout=20)
             if r.returncode == 0 and r.stdout.strip():
@@ -711,7 +711,7 @@ def remote_sha(slug: str, ref: str) -> str:
     try:
         req = urllib.request.Request("https://api.github.com/repos/%s/commits/%s" % (slug, ref),
                                      headers={"Accept": "application/vnd.github.sha",
-                                              "User-Agent": "takeoff-assistant"})
+                                              "User-Agent": "kspeed"})
         with urllib.request.urlopen(req, timeout=10) as resp:
             return resp.read().decode("ascii", "ignore").strip()
     except Exception:
@@ -734,7 +734,7 @@ def pull_latest(slug: str, ref: str) -> str:
     url = "https://codeload.github.com/%s/zip/refs/heads/%s" % (slug, ref)
     info("Downloading %s" % url)
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "takeoff-assistant"}),
+        with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "kspeed"}),
                                     timeout=60) as resp:
             data = resp.read()
     except (urllib.error.URLError, OSError) as e:
@@ -803,7 +803,7 @@ def cmd_install(args) -> int:
 
     say()
     say(bold("  All set."))
-    say("   - Start KSP and launch a plane from the SPH. Press Alt+K for the Takeoff Assistant window.")
+    say("   - Start KSP and launch a plane from the SPH. Press Alt+K for the K-SPeed window.")
     say("   - Take off once so the mod learns your craft's real liftoff speed.")
     say("   - Update later with:  %s update" % CMD_NAME)
     say("   - Remove with:        %s uninstall" % CMD_NAME)
@@ -848,7 +848,7 @@ def cmd_update(args) -> int:
     slug = resolve_repo(state, args.repo)
     ref = args.ref or state.get("ref") or DEFAULT_REF
     if slug == PLACEHOLDER_REPO:
-        die("No GitHub repo configured. Run: python tools/set_repo.py YOUR_USER/YOUR_REPO (or set TAKEOFF_ASSISTANT_REPO).")
+        die("No GitHub repo configured. Run: python tools/set_repo.py YOUR_USER/YOUR_REPO (or set KSPEED_REPO).")
     ksp = choose_ksp(state, args.ksp)
 
     info("Checking %s (%s) ..." % (slug, ref))
@@ -1014,7 +1014,7 @@ def cmd_tui(args) -> int:
 
 # =============================================================================
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog=CMD_NAME, description="Install, update and remove the Spaceplane Takeoff Assistant KSP mod.")
+    p = argparse.ArgumentParser(prog=CMD_NAME, description="Install, update and remove the K-SPeed KSP mod.")
     p.add_argument("--version", action="version", version=__version__)
     sub = p.add_subparsers(dest="cmd")
 
@@ -1049,7 +1049,7 @@ def main(argv=None) -> int:
             setattr(args, name, default)
     if getattr(args, "everything", False):
         args.purge = True
-    ASSUME_YES = bool(args.yes) or os.environ.get("TAKEOFF_ASSISTANT_YES") == "1"
+    ASSUME_YES = bool(args.yes) or os.environ.get("KSPEED_YES") == "1"
     VERBOSE = bool(args.verbose)
     handlers = {"install": cmd_install, "update": cmd_update, "uninstall": cmd_uninstall,
                 "status": cmd_status, None: cmd_tui}

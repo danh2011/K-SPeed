@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpaceplaneTakeoffAssistant
+namespace kspeed
 {
     enum Phase { Idle, Ready, Roll, Airborne }
     enum Advice { None, Normal, TooShort, Abort, Go, Overrun }
 
     [KSPAddon(KSPAddon.Startup.Flight, false)]
-    public class TakeoffAssistantAddon : MonoBehaviour
+    public class KSpeedAddon : MonoBehaviour
     {
         const double RHO0 = 1.225;        // Kerbin sea-level density, kg/m^3 (IAS reference)
         const double MS_TO_KT = 1.943844;
@@ -70,13 +70,13 @@ namespace SpaceplaneTakeoffAssistant
             foreach (string n in names)
             {
                 AudioClip c = GameDatabase.Instance.GetAudioClip(PluginPaths.SoundUrl + n);
-                if (c == null) Debug.LogWarning("[TakeoffAssistant] Missing sound: " + n);
+                if (c == null) Debug.LogWarning("[kspeed] Missing sound: " + n);
                 else clips[n] = c;
             }
 
             GameEvents.onHideUI.Add(OnHideUI);
             GameEvents.onShowUI.Add(OnShowUI);
-            Debug.Log("[TakeoffAssistant] Loaded. Runways: " + db.All.Count + ", sounds: " + clips.Count);
+            Debug.Log("[kspeed] Loaded. Runways: " + db.All.Count + ", sounds: " + clips.Count);
         }
 
         void OnDestroy()
@@ -243,7 +243,7 @@ namespace SpaceplaneTakeoffAssistant
                 LatB = v.latitude, LonB = v.longitude + dLon
             });
             db.Save();
-            Debug.Log("[TakeoffAssistant] KSC runway set from SPH spawn point.");
+            Debug.Log("[kspeed] KSC runway set from SPH spawn point.");
         }
 
         // =====================================================================
@@ -418,7 +418,7 @@ namespace SpaceplaneTakeoffAssistant
             BuildStyles();
 
             DrawAdviceBanner();
-            if (show) win = GUILayout.Window(0x7A5B, win, DrawWindow, "Takeoff Assistant  (Alt+" + cfg.ToggleKey + ")");
+            if (show) win = GUILayout.Window(0x7A5B, win, DrawWindow, "K-SPeed  (Alt+" + cfg.ToggleKey + ")");
         }
 
         void DrawAdviceBanner()

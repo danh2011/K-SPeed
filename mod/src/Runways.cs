@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace SpaceplaneTakeoffAssistant
+namespace kspeed
 {
     /// <summary>
     /// A runway is a straight line between two threshold points given as latitude/longitude.
@@ -105,7 +105,7 @@ namespace SpaceplaneTakeoffAssistant
             }
             catch (Exception e)
             {
-                Debug.LogWarning("[TakeoffAssistant] Could not read runways: " + e.Message);
+                Debug.LogWarning("[kspeed] Could not read runways: " + e.Message);
             }
 
             if (db.All.Count == 0)
@@ -119,7 +119,7 @@ namespace SpaceplaneTakeoffAssistant
         /// <summary>
         /// Rough KSC seed: centre taken from the KSP wiki (about 0°02'26"S, 74°41'28"W), running due
         /// east-west for 2526 m. This is only a starting guess; the mod replaces it with an exact value the
-        /// first time you launch a plane from the SPH (see TakeoffAssistantAddon.TryAutoDefineKsc).
+        /// first time you launch a plane from the SPH (see KSpeedAddon.TryAutoDefineKsc).
         /// </summary>
         void SeedDefaults()
         {
@@ -155,7 +155,7 @@ namespace SpaceplaneTakeoffAssistant
             }
             catch (Exception e)
             {
-                Debug.LogWarning("[TakeoffAssistant] Could not save runways: " + e.Message);
+                Debug.LogWarning("[kspeed] Could not save runways: " + e.Message);
             }
         }
     }

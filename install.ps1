@@ -1,22 +1,22 @@
-# Spaceplane Takeoff Assistant - bootstrap installer for Windows (PowerShell 5.1+ or 7+).
+# K-SPeed - bootstrap installer for Windows (PowerShell 5.1+ or 7+).
 #
 #   irm https://raw.githubusercontent.com/OWNER/REPO/main/install.ps1 | iex
 #
-# Fetches the repo into %LOCALAPPDATA%\TakeoffAssistant\repo, then launches the interactive manager.
-# Optional env vars: TAKEOFF_ASSISTANT_REPO, TAKEOFF_ASSISTANT_REF, TAKEOFF_ASSISTANT_YES=1
+# Fetches the repo into %LOCALAPPDATA%\K-SPeed\repo, then launches the interactive manager.
+# Optional env vars: KSPEED_REPO, KSPEED_REF, KSPEED_YES=1
 $ErrorActionPreference = 'Stop'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Repo = if ($env:TAKEOFF_ASSISTANT_REPO) { $env:TAKEOFF_ASSISTANT_REPO } else { 'OWNER/REPO' }
-$Ref = if ($env:TAKEOFF_ASSISTANT_REF) { $env:TAKEOFF_ASSISTANT_REF } else { 'main' }
-$AppHome = if ($env:TAKEOFF_ASSISTANT_HOME) { $env:TAKEOFF_ASSISTANT_HOME } else { Join-Path $env:LOCALAPPDATA 'TakeoffAssistant' }
-$GitUrl = if ($env:TAKEOFF_ASSISTANT_GIT_URL) { $env:TAKEOFF_ASSISTANT_GIT_URL } else { "https://github.com/$Repo.git" }
+$Repo = if ($env:KSPEED_REPO) { $env:KSPEED_REPO } else { 'OWNER/REPO' }
+$Ref = if ($env:KSPEED_REF) { $env:KSPEED_REF } else { 'main' }
+$AppHome = if ($env:KSPEED_HOME) { $env:KSPEED_HOME } else { Join-Path $env:LOCALAPPDATA 'K-SPeed' }
+$GitUrl = if ($env:KSPEED_GIT_URL) { $env:KSPEED_GIT_URL } else { "https://github.com/$Repo.git" }
 $Src = Join-Path $AppHome 'repo'
 
 function Say($m) { Write-Host "==> $m" }
 function Fail($m) { Write-Host "!!  $m" -ForegroundColor Red; throw $m }
 
-if ($Repo -eq ('OWNER' + '/REPO') -and -not $env:TAKEOFF_ASSISTANT_GIT_URL) {
+if ($Repo -eq ('OWNER' + '/REPO') -and -not $env:KSPEED_GIT_URL) {
     Fail 'This script still has the OWNER/REPO placeholder. Run tools/set_repo.py YOUR_USER/YOUR_REPO first.'
 }
 
@@ -83,6 +83,6 @@ if (-not (Test-Path $Manager)) { Fail "Download looks wrong: $Manager not found.
 
 # ---- Hand over to the manager -----------------------------------------------------
 $mArgs = @($Manager, 'install', '--repo', $Repo, '--ref', $Ref)
-if ($env:TAKEOFF_ASSISTANT_YES -eq '1') { $mArgs += '--yes' }
+if ($env:KSPEED_YES -eq '1') { $mArgs += '--yes' }
 # Note: no 'exit' here - under 'irm | iex' that would close the user's terminal window.
 & $Py @mArgs

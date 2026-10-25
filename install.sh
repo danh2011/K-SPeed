@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
-# Spaceplane Takeoff Assistant - bootstrap installer for macOS and Linux.
+# K-SPeed - bootstrap installer for macOS and Linux.
 #
 #   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/OWNER/REPO/main/install.sh)"
 #
-# Fetches the repo into ~/.takeoff-assistant/repo, then launches the interactive manager.
+# Fetches the repo into ~/.kspeed/repo, then launches the interactive manager.
 # Extra flags are passed through, e.g.:  ... install.sh --yes --ksp "/path/to/KSP"
 set -euo pipefail
 
-REPO="${TAKEOFF_ASSISTANT_REPO:-OWNER/REPO}"
-REF="${TAKEOFF_ASSISTANT_REF:-main}"
-APP_HOME="${TAKEOFF_ASSISTANT_HOME:-$HOME/.takeoff-assistant}"
-GIT_URL="${TAKEOFF_ASSISTANT_GIT_URL:-https://github.com/$REPO.git}"
+REPO="${KSPEED_REPO:-OWNER/REPO}"
+REF="${KSPEED_REF:-main}"
+APP_HOME="${KSPEED_HOME:-$HOME/.kspeed}"
+GIT_URL="${KSPEED_GIT_URL:-https://github.com/$REPO.git}"
 SRC="$APP_HOME/repo"
 
 say()  { printf "==> %s\n" "$*"; }
 warn() { printf "!!  %s\n" "$*" >&2; }
 die()  { warn "$*"; exit 1; }
 
-if [ "$REPO" = "OWNER""/REPO" ] && [ -z "${TAKEOFF_ASSISTANT_GIT_URL:-}" ]; then
+if [ "$REPO" = "OWNER""/REPO" ] && [ -z "${KSPEED_GIT_URL:-}" ]; then
   die "This script still has the OWNER/REPO placeholder. Run tools/set_repo.py YOUR_USER/YOUR_REPO first."
 fi
 
