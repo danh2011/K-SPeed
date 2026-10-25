@@ -79,7 +79,7 @@ git remote add origin https://github.com/danh2011/k-speed.git && git push -u ori
 ```
 
 Every `kspeed update` tracks the `main` branch, so pushing to `main` ships to everyone.
-Forks/mirrors: set `KSPEED_REPO=you/fork` and/or `KSPEED_REF=branch`.
+Forks/mirrors: set `KSPEED_INSTALL_REPO=you/fork` and/or `KSPEED_REF=branch`.
 
 ## Repo layout
 

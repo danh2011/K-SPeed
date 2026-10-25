@@ -7,7 +7,7 @@
 # Extra flags are passed through, e.g.:  ... install.sh --yes --ksp "/path/to/KSP"
 set -euo pipefail
 
-REPO="${KSPEED_REPO:-danh2011/k-speed}"
+REPO="${KSPEED_INSTALL_REPO:-danh2011/k-speed}"
 REF="${KSPEED_REF:-main}"
 APP_HOME="${KSPEED_HOME:-$HOME/.kspeed}"
 GIT_URL="${KSPEED_GIT_URL:-https://github.com/$REPO.git}"

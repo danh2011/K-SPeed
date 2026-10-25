@@ -3,11 +3,11 @@
 #   irm https://raw.githubusercontent.com/danh2011/k-speed/main/install.ps1 | iex
 #
 # Fetches the repo into %LOCALAPPDATA%\K-SPeed\repo, then launches the interactive manager.
-# Optional env vars: KSPEED_REPO, KSPEED_REF, KSPEED_YES=1
+# Optional env vars: KSPEED_INSTALL_REPO, KSPEED_REF, KSPEED_YES=1
 $ErrorActionPreference = 'Stop'
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$Repo = if ($env:KSPEED_REPO) { $env:KSPEED_REPO } else { 'danh2011/k-speed' }
+$Repo = if ($env:KSPEED_INSTALL_REPO) { $env:KSPEED_INSTALL_REPO } else { 'danh2011/k-speed' }
 $Ref = if ($env:KSPEED_REF) { $env:KSPEED_REF } else { 'main' }
 $AppHome = if ($env:KSPEED_HOME) { $env:KSPEED_HOME } else { Join-Path $env:LOCALAPPDATA 'K-SPeed' }
 $GitUrl = if ($env:KSPEED_GIT_URL) { $env:KSPEED_GIT_URL } else { "https://github.com/$Repo.git" }
