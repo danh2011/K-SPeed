@@ -73,9 +73,9 @@ Override with `KSPEED_HOME` / `KSPEED_BIN`.
 ## Publishing this repo (for the maintainer)
 
 ```sh
-python tools/set_repo.py YOUR_USER/YOUR_REPO   # swaps the danh2011/k-speed placeholder in the scripts and this README
+python tools/set_repo.py YOUR_USER/YOUR_REPO   # swaps the OWNER/REPO placeholder in the scripts and this README
 git init -b main && git add -A && git commit -m "Initial commit"
-git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git && git push -u origin main
+git remote add origin https://github.com/danh2011/k-speed.git && git push -u origin main
 ```
 
 Every `kspeed update` tracks the `main` branch, so pushing to `main` ships to everyone.
